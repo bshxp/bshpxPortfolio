@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <@ //bshpx_> — access_granted
+    </title>
+    <link rel="icon" type="image" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__logo" data-target="hero">&lt;@//bshpx_&gt;</div>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav__list" id="navList">
+                <li><a href="#" class="nav__link active" data-target="hero">Home</a></li>
+                <li><a href="#" class="nav__link" data-target="about">About</a></li>
+                <li><a href="#" class="nav__link" data-target="terminal">Terminal</a></li>
+                <li><a href="#" class="nav__link" data-target="projects">Projects</a></li>
+                <li><a href="#" class="nav__link" data-target="certs">Certifications</a></li>
+                <li><a href="#" class="nav__link" data-target="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-viewport">
+        <!-- Hero Section -->
+        <section id="hero" class="page-section active container">
+            <div class="hero__badge">
+                <span class="status-dot"></span> System Status: Secure & Monitoring
+            </div>
+            <h1 class="hero__title">Hi, I'm <span class="highlight">Francis Garcia</span></h1>
+            <p class="hero__subtitle">Cybersecurity Analyst & Threat Hunter specializing in enterprise defense, incident
+                response, and offensive security simulations.</p>
+            <div class="hero__actions">
+                <button class="btn btn--primary nav-switch" data-target="projects">Explore Projects</button>
+                <button class="btn btn--outline nav-switch" data-target="terminal">Open Terminal CLI</button>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="page-section container">
+            <h2 class="section__title">01. // About Me</h2>
+            <div class="about__grid">
+                <div class="about__text">
+                    <p>I am a DICT-recognized Cybersecurity Professional and BSIT graduate from Pamantasan ng Lungsod ng
+                        Valenzuela with internship experience in IT support, troubleshooting, and web development.</p>
+                    <p>I hold CCP, NetOps, and CAISP certifications with hands-on knowledge of Kali Linux, Windows
+                        environments, and syslog monitoring. Seeking a Cybersecurity or IT support role
+                        where I can contribute to team success and organizational security.</p>
+                </div>
+                <div class="about__stats">
+                    <div class="stat-card">
+                        <span class="stat-card__number">BSIT</span>
+                        <span class="stat-card__label">Pamantasan ng Lungsod ng Valenzuela (Bachelors Degree)</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card__number">DICT</span>
+                        <span class="stat-card__label">Recognized Professional</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terminal Section -->
+        <section id="terminal" class="page-section container">
+            <h2 class="section__title">02. // Interactive CLI Shell</h2>
+            <p class="section__desc">Type commands below like in a real Linux/Unix terminal. Try typing
+                <code>help</code>, <code>whoami</code>, <code>skills</code>, <code>certs</code>, or <code>clear</code>.
+            </p>
+
+            <div class="terminal">
+                <div class="terminal__bar">
+                    <div class="terminal__buttons">
+                        <span class="terminal__btn terminal__btn--red"></span>
+                        <span class="terminal__btn terminal__btn--yellow"></span>
+                        <span class="terminal__btn terminal__btn--green"></span>
+                    </div>
+                    <div class="terminal__title">bash - bshpx@FrancisGarcia:~</div>
+                </div>
+                <div class="terminal__body" id="terminalBody">
+                    <div class="terminal__line">Welcome to SecurityOS v4.2.1-RELEASE</div>
+                    <div class="terminal__line">Type <span class="terminal__cmd-highlight">help</span> to view available
+                        system commands.</div>
+                    <br>
+                </div>
+                <div class="terminal__input-line">
+                    <span class="terminal__prompt">bshpx@FrancisGarcia:~$</span>
+                    <input type="text" id="terminalInput" autocomplete="off" spellcheck="false">
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="page-section container">
+            <h2 class="section__title">03. // Featured Projects</h2>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="dfir">DFIR & Forensics</button>
+                <button class="filter-btn" data-filter="web">Web Security</button>
+                <button class="filter-btn" data-filter="writeups">Write-ups</button>
+            </div>
+
+            <div class="projects__grid">
+
+                <!-- Project 1: OverTheWire Bandit -->
+                <article class="project-card" data-category="writeups">
+                    <div class="project-card__header">
+                        <span class="project-card__tag">Linux & Security Basics</span>
+                        <h3 class="project-card__title">OverTheWire Bandit (Levels 0–11)</h3>
+                    </div>
+                    <p class="project-card__description">
+                        Comprehensive Linux CLI write-up covering SSH, file searching, permissions, pipeline redirection
+                        (stdin/stdout/stderr), sorting, strings extraction, base64, and ROT13 decoding.
+                    </p>
+                    <div class="project-card__footer">
+                        <ul class="project-card__tech">
+                            <li>Linux CLI</li>
+                            <li>Bash</li>
+                            <li>Cryptography</li>
+                            <li>OverTheWire</li>
+                        </ul>
+                        <button class="project-card__link open-modal" data-project="bandit-lab">View Details
+                            &rarr;</button>
+                    </div>
+                </article>
+
+                <!-- Project 2: LetsDefend JetBrains Lab Write-up -->
+                <article class="project-card" data-category="writeups dfir">
+                    <div class="project-card__header">
+                        <span class="project-card__tag">SOC Investigation & DFIR</span>
+                        <h3 class="project-card__title">LetsDefend: JetBrains Security Incident</h3>
+                    </div>
+                    <p class="project-card__description">
+                        Step-by-step SOC triage and forensic investigation of a compromised developer workstation
+                        involving anomalous JetBrains IDE process execution and post-exploitation artifacts.
+                    </p>
+                    <div class="project-card__footer">
+                        <ul class="project-card__tech">
+                            <li>SIEM Triage</li>
+                            <li>EDR Telemetry</li>
+                            <li>Process Analysis</li>
+                            <li>Incident Response</li>
+                        </ul>
+                        <button class="project-card__link open-modal" data-project="jetbrains-lab">View Details
+                            &rarr;</button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certs" class="page-section container">
+            <h2 class="section__title">04. // Verified Credentials & Badges</h2>
+            <p class="section__desc">Click on any credential badge to inspect official validation records.</p>
+
+            <div class="cert-gallery">
+
+                <!-- DICT Badge Card in #certs section -->
+                <div class="cert-card">
+                    <div class="cert-card__badge-wrapper">
+                        <img src="Badges/dict-logo.png" alt="DICT Cybersecurity Professional" class="cert-card__img">
+                    </div>
+                    <div class="cert-card__info">
+                        <span class="cert-card__issuer">DICT • Level 2 Intermediate</span>
+                        <h3 class="cert-card__name">DICT Cybersecurity Professional Badge</h3>
+                        <p class="cert-card__date">Recognized: Oct 13, 2026</p>
+                        <button class="btn btn--outline btn--small" id="viewDictBadgeBtn">View Badge</button>
+                    </div>
+                </div>
+
+                <!-- Google IT sup Badge -->
+                <div class="cert-card">
+                    <div class="cert-card__badge-wrapper">
+                        <img src="Badges/courseraLogo.png.png" alt="Google IT Support" class="cert-card__img">
+                    </div>
+                    <div class="cert-card__info">
+                        <span class="cert-card__issuer">Coursera</span>
+                        <h3 class="cert-card__name">Google IT Support Certificate</h3>
+                        <p class="cert-card__date">Issued: Oct 15, 2026</p>
+                        <a href="https://www.coursera.org/account/accomplishments/professional-cert/DVOB7X9IV298"
+                            target="_blank" class="btn btn--outline btn--small">Verify Online</a>
+                    </div>
+                </div>
+
+                <!-- CCP Badge -->
+                <div class="cert-card">
+                    <div class="cert-card__badge-wrapper">
+                        <img src="Badges/CCP_badge.png" alt="CCP Badge" class="cert-card__img">
+                    </div>
+                    <div class="cert-card__info">
+                        <span class="cert-card__issuer">Appkademiya</span>
+                        <h3 class="cert-card__name">Certified Cybersecurity Professional</h3>
+                        <p class="cert-card__date">Issued: Oct 13, 2026</p>
+                        <a href="https://appkademiya.online/verify/CERT-CCP-CYBERSECURITY-PROFESSIONAL-20261013-402C6F96649C"
+                            target="_blank" class="btn btn--outline btn--small">Verify Online</a>
+                    </div>
+                </div>
+
+                <!-- NetOps Badge -->
+                <div class="cert-card">
+                    <div class="cert-card__badge-wrapper">
+                        <img src="Badges/NETOPS_badge.png" alt="CAISP Badge" class="cert-card__img">
+                    </div>
+                    <div class="cert-card__info">
+                        <span class="cert-card__issuer">Appkademiya</span>
+                        <h3 class="cert-card__name">NetOps Certified Engineer (NTO-101)</h3>
+                        <p class="cert-card__date">Issued: Oct 13, 2026</p>
+                        <a href="https://appkademiya.online/verify/CERT-NETOPS-CERTIFIED-ENGINEER-NTO101-20261013-DBCABA9E174D"
+                            target="_blank" class="btn btn--outline btn--small">Verify Online</a>
+                    </div>
+                </div>
+
+                <!-- CAISP Badge -->
+                <div class="cert-card">
+                    <div class="cert-card__badge-wrapper">
+                        <img src="Badges/CAISP_badge.png" alt="CAISP Badge" class="cert-card__img">
+                    </div>
+                    <div class="cert-card__info">
+                        <span class="cert-card__issuer">Appkademiya</span>
+                        <h3 class="cert-card__name">Certified AI Security Practitioner</h3>
+                        <p class="cert-card__date">Issued: Oct 31, 2026</p>
+                        <a href="https://appkademiya.online/verify/CERT-CERTIFIED-AI-SECURITY-PRACTITIONER-CAISP-20261031-C0083C778DC9"
+                            target="_blank" class="btn btn--outline btn--small">Verify Online</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="page-section container">
+            <h2 class="section__title">05. // Secure Communications</h2>
+            <div class="contact__card">
+                <p>Have an opportunity, security consultation, or collaboration in mind? Reach out directly or verify my
+                    identity via PGP.</p>
+                <div class="contact__links">
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=francisylorg@gmail.com" target="_blank"
+                        class="btn btn--primary">Send Email</a>
+                    <a href="https://www.linkedin.com/in/francis-yllor-garcia-7462361aa/" target="_blank"
+                        class="btn btn--outline">LinkedIn</a>
+                </div>
+                <div class="pgp-box">
+                    <span>PGP Fingerprint: 4F8B 21C3 90A2 E811 76FF</span>
+                    <button id="copyPgpBtn" class="btn-copy">Copy Key</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Francis Garcia.</p>
+        </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal__content">
+            <button class="modal__close" id="modalClose" aria-label="Close modal">&times;</button>
+            <h3 id="modalTitle">Project Title</h3>
+            <p id="modalDesc">Detailed project write-up and architecture overview goes here...</p>
+            <div class="modal__actions">
+                <a href="#" id="modalRepoLink" target="_blank" class="btn btn--primary">View on GitHub</a>
+                <a href="#" id="modalOtwLink" target="_blank" class="btn btn--primary" style="display: none;">View on
+                    OverTheWire</a>
+                <a href="#" id="modalCyberDefendersLink" target="_blank" class="btn btn--primary"
+                    style="display: none;">View on CyberDefenders</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DICT Badge Modal -->
+    <div class="modal" id="dictBadgeModal">
+        <div class="modal__content" style="text-align: center;">
+            <button class="modal__close" id="dictBadgeModalClose" aria-label="Close badge modal">&times;</button>
+            <h3>DICT Cybersecurity Badge</h3>
+            <div style="margin: 1.5rem 0;">
+                <img src="/Badges/lvl2Badge.jpg" alt="DICT Cybersecurity Badge"
+                    style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border-subtle);">
+            </div>
+            <div class="modal__actions" style="justify-content: center;">
+                <a href="https://cyberpro.dict.gov.ph/verify" target="_blank" class="btn btn--primary">Verify to
+                    Portal</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
