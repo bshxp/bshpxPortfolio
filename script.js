@@ -66,7 +66,7 @@ const commands = {
     whoami: "Francis Yllor Garcia [Cybersecurity Analyst & Threat Hunter]",
     skills: "Tools: Splunk, Sysmon, Wireshark, Kibana, Git\nLangs: Python, Bash, C, C++\nOS: Kali Linux, Windows Server, Windows 11",
     certs: "1. DICT Cybersecurity Professional Badge\n2. Certified Cybersecurity Professional (CCP)\n3. NetOps Certified Engineer (NTO-101)\n4. Certified AI Security Practitioner (CAISP)\n5. Google IT Support Certificate",
-    projects: "1. OverTheWire Bandit (Levels 0–11) Write-up\n2. LetsDefend: JetBrains Security Incident\n",
+    projects: "1. OverTheWire Bandit Write-up\n2. LetsDefend: JetBrains Security Incident\n",
     contact: "Email: francisylorg@gmail.com | Location: Valenzuela City"
 };
 
@@ -201,7 +201,13 @@ const banditLevels = [
         level: "Level 11 → 12",
         title: "Cracking Ciphers with ROT13 Translation",
         content: `In this final level, all alphabetical letters have been rotated by 13 positions (a classic Caesar cipher known as ROT13).\n\nInstead of manual decryption, we teach students how to use the <code>tr</code> (translate) command to remap the alphabet on the fly:\n\n<code>cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'</code>\n\n<em>The Lesson:</em> This maps A through M to N through Z, and vice-versa for both upper and lower cases, instantly shifting the encrypted text back into readable English!`
+    },
+    {
+        level: "Level 12 → 13",
+        title: "Reversing Heaps, Hexdumps & Multi-Layer Compression",
+        content: `In Level 12, the password file is a hex dump of a binary that has been repeatedly compressed (gzip, bzip2, tar archives nested together).\n\n1. Create a secure working environment: <code>cd $(mktemp -d)</code>\n2. Copy and reverse the hex dump: <code>xxd -r /home/bandit12/data.txt > data.bin</code>\n3. Iteratively inspect archive signatures using <code>file data.bin</code>, rename with proper extensions (<code>.gz</code>, <code>.bz2</code>, <code>.tar</code>), and extract recursively (<code>gzip -d</code>, <code>bzip2 -d</code>, <code>tar -xf</code>).\n\nOnce the final ASCII text layer is reached, <code>cat</code> reveals the password for Level 13!`
     }
+    
 ];
 
 const jetbrainsSteps = [
